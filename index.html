@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Dado de 30.000 Lados</title>
+  <style>
+    body {
+      margin: 0;
+      background: linear-gradient(to bottom, black, rgb(58, 57, 57));
+      font-family: Arial, sans-serif;
+    }
+
+    .fundo {
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .conteudo {
+      background-image: url('imagens/charizard.gif');
+      background-size: cover;
+      background-position: center;
+      border-radius: 16px;
+      padding: 40px;
+      text-align: center;
+      max-width: 400px;
+      width: 90%;
+      box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+      position: relative;
+      color: white;
+      overflow: hidden;
+    }
+
+    .conteudo::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.274);
+      z-index: 0;
+      border-radius: 16px;
+    }
+
+    .conteudo * {
+      position: relative;
+      z-index: 1;
+    }
+
+    h1 {
+      margin-top: 0;
+      font-size: 28px;
+    }
+
+    input {
+      padding: 8px;
+      font-size: 16px;
+      width: 100%;
+      max-width: 200px;
+      margin-bottom: 20px;
+      border-radius: 6px;
+      border: none;
+    }
+
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: #333;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    button:hover {
+      background-color: #555;
+    }
+
+    .dado {
+      width: 100px;
+      height: 100px;
+      margin: 20px auto;
+      background: #f0f0f0;
+      border: 4px solid #555;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      font-weight: bold;
+      animation: girar 0.5s linear infinite;
+      color: #000;
+    }
+
+    @keyframes girar {
+      0%   { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    #resultado {
+      font-size: 20px;
+      font-weight: bold;
+      margin-top: 20px;
+      color: gold;
+    }
+    .direitos {
+    color: rgba(0, 0, 0, 0.692);
+    text-align: center;
+    font-style: italic;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    padding: 10px;
+}
+  </style>
+</head>
+<body>
+  <div class="fundo">
+    <div class="conteudo">
+      <h1>Dado de 30.000 Lados 🎲</h1>
+      <p>Escolha um número de 1 a 30000:</p>
+      <input type="number" id="numeroEscolhido" min="1" max="30000" value="109">
+      <br><br>
+      <button onclick="rolarDado()" style="color: rgb(120, 170, 245);">Rolar o dado até acertar</button>
+      <div class="dado" id="dado">🎲</div>
+      <p id="resultado"></p>
+    </div>
+  </div>
+  <p class="direitos">&copy; Aziien</p>
+
+  <script>
+    function rolarDado() {
+      const numeroEscolhido = parseInt(document.getElementById("numeroEscolhido").value);
+      const dadoDiv = document.getElementById("dado");
+      const resultadoDiv = document.getElementById("resultado");
+
+      let tentativas = 0;
+      let resultado = 0;
+
+      dadoDiv.style.animationPlayState = 'running';
+      resultadoDiv.textContent = "";
+
+      setTimeout(() => {
+        while (resultado !== numeroEscolhido) {
+          resultado = Math.floor(Math.random() * 30000) + 1;
+          tentativas++;
+        }
+
+        dadoDiv.style.animationPlayState = 'paused';
+        resultadoDiv.textContent = `Acertou o número ${numeroEscolhido} após ${tentativas} rolagens!!! 🎉`;
+      }, 1000);
+    }
+  </script>
+</body>
+</html>
